@@ -11,18 +11,33 @@ const earaseAllTasks = document.querySelector('#earaseAll')
 
 ////////////////////////////////////
 /* Set Up Listeners */
-// function setUpListeners(item) {
-//         // when an item is clicked add a line throigh
-//         item.addEventListener('click', () => {
-//             item.style.textDecoration = 'line-through';
-//             saveTasks();
-//           });
-//       // when clicked twice on item remove it
-//           item.addEventListener('dblclick', () => {
-//             container.removeChild(item);
-//             saveTasks();
-//           });
-// }
+function setUpListeners(item) {
+
+
+    item.addEventListener('click', () => {
+      item.style.textDecoration = 'line-through';
+      saveTasks();
+    });
+
+    enableEditing(item);
+
+    let pressTimer;
+    item.addEventListener('mousedown', () => {
+      pressTimer = setTimeout(() => {
+        container.removeChild(item);
+        saveTasks();
+      }, 1000);
+    });
+
+    item.addEventListener('mouseup', () => {
+        clearTimeout(pressTimer);
+      });
+     item.addEventListener('mouseleave', () => {
+    clearTimeout(pressTimer);
+  });
+
+  }
+
 
 //////////////////////////////
 /* Local Storage */
@@ -131,34 +146,3 @@ function enableEditing(item) {
         }
     })
 }
-
-
-//////
-// SETUP LISTENER TO be placed in different spot
-function setUpListeners(item) {
-
-
-    item.addEventListener('click', () => {
-      item.style.textDecoration = 'line-through';
-      saveTasks();
-    });
-
-    enableEditing(item);
-
-    let pressTimer;
-    item.addEventListener('mousedown', () => {
-      pressTimer = setTimeout(() => {
-        container.removeChild(item);
-        saveTasks();
-      }, 1000);
-    });
-
-    item.addEventListener('mouseup', () => {
-        clearTimeout(pressTimer);
-      });
-     item.addEventListener('mouseleave', () => {
-    clearTimeout(pressTimer);
-  });
-
-  }
-
